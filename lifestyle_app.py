@@ -114,7 +114,7 @@ def load_lifestyle_data():
     """CSV 파일에서 라이프스타일 데이터 로드"""
     try:
         import pandas as pd
-        df = pd.read_csv('./data/lifestyle_100_utf8.csv')
+        df = pd.read_csv('lifestyle_100_utf8.csv')
         st.success(f"✅ CSV 파일을 성공적으로 읽었습니다!")
         return df
     except FileNotFoundError:
