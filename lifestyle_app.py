@@ -10,40 +10,46 @@ import platform
 # 페이지 설정
 st.set_page_config(page_title="🌟 라이프 트래커", layout="wide")
 
-# 한글 폰트 설정 - 여러 폰트를 순서대로 시도
+# 로컬 한글 폰트 설정
 def set_korean_font():
     import matplotlib.font_manager as fm
+    import os
     
-    # 사용 가능한 한글 폰트 목록 (우선순위 순)
-    korean_fonts = [
-        'Malgun Gothic',     # Windows
-        'AppleGothic',       # macOS  
-        'NanumGothic',       # 나눔고딕
-        'NanumBarunGothic',  # 나눔바른고딕
-        'Noto Sans CJK KR',  # 구글 노토
-        'Arial Unicode MS',  # 유니코드 지원
-        'DejaVu Sans'        # 기본 대체
-    ]
+    try:
+        # 로컬 폰트 파일 경로
+        font_path = './fonts/NanumGothic.ttf'
+        
+        # 폰트 파일이 존재하는지 확인
+        if os.path.exists(font_path):
+            # 폰트 등록
+            fm.fontManager.addfont(font_path)
+            
+            # 폰트 이름으로 설정 (나눔고딕)
+            plt.rcParams['font.family'] = 'NanumGothic'
+            print(f"✅ 로컬 한글 폰트 설정 완료: {font_path}")
+            
+        else:
+            print(f"❌ 폰트 파일을 찾을 수 없습니다: {font_path}")
+            # 폴백: 시스템 한글 폰트 시도
+            korean_fonts = ['Malgun Gothic', 'AppleGothic', 'NanumGothic', 'DejaVu Sans']
+            available_fonts = [f.name for f in fm.fontManager.ttflist]
+            
+            for font in korean_fonts:
+                if font in available_fonts:
+                    plt.rcParams['font.family'] = font
+                    print(f"🔄 시스템 폰트 사용: {font}")
+                    break
     
-    # 설치된 폰트 중에서 사용 가능한 첫 번째 한글 폰트 찾기
-    available_fonts = [f.name for f in fm.fontManager.ttflist]
-    
-    for font in korean_fonts:
-        if font in available_fonts:
-            plt.rcParams['font.family'] = font
-            print(f"한글 폰트 설정: {font}")
-            break
-    else:
-        # 한글 폰트를 찾지 못한 경우
+    except Exception as e:
+        print(f"⚠️ 폰트 설정 중 오류 발생: {e}")
         plt.rcParams['font.family'] = 'DejaVu Sans'
-        print("한글 폰트를 찾지 못했습니다. 기본 폰트를 사용합니다.")
     
     # 마이너스 기호 깨짐 방지
     plt.rcParams['axes.unicode_minus'] = False
     
-    # 폰트 크기 및 기타 설정
-    plt.rcParams['font.size'] = 12
-    plt.rcParams['figure.titlesize'] = 16
+    # 한글 폰트 설정 확인
+    current_font = plt.rcParams['font.family']
+    print(f"📝 현재 사용 중인 폰트: {current_font}")
 
 set_korean_font()
 
