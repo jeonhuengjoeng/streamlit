@@ -130,7 +130,7 @@ df = pd.DataFrame(data)
 
 # 메인 타이틀 - 크기를 줄이고 더 진하게
 st.markdown("""
-<h1 style='
+<h2 style='
     text-align: center; 
     color: #000000; 
     font-weight: 900; 
@@ -138,7 +138,7 @@ st.markdown("""
     margin-bottom: 2rem;
     text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
     font-family: NanumGothic, sans-serif;
-'>🌟 라이프 트래커 대시보드</h1>
+'>🌟 라이프 트래커 </h2>
 """, unsafe_allow_html=True)
 
 if not font_loaded:
@@ -153,9 +153,9 @@ with col2:
     
     mood_counts = df['기분'].value_counts()
     # 파스텔 톤 컬러 (선명하게)
-    colors = ['#FF9AA2', '##53d2d9', '#A8E6CF']  # 더 선명한 파스텔
+    colors = ['#FF9AA2', '#B5EAD7', '#A8E6CF']  # 더 선명한 파스텔
     
-    # 도넛 차트 생성 - 33% 텍스트 크기 증가
+    # 도넛 차트 생성
     wedges, texts, autotexts = ax1.pie(mood_counts.values, 
                                       labels=mood_counts.index,
                                       colors=colors,
@@ -163,7 +163,7 @@ with col2:
                                       startangle=90,
                                       pctdistance=0.85,
                                       wedgeprops=dict(width=0.5, edgecolor='white', linewidth=3),
-                                      textprops={'fontweight': 'bold', 'fontsize': 20})
+                                      textprops={'fontweight': 'bold', 'fontsize': 16})
     
     # 가운데 원 추가 (도넛 효과)
     centre_circle = Circle((0,0), 0.50, fc='white', alpha=1)
@@ -172,11 +172,11 @@ with col2:
     # 제목 설정 (더 진하고 선명하게)
     ax1.set_title('😊 기분 분포', fontsize=26, fontweight='bold', pad=30, color='#000000')
     
-    # 텍스트 스타일링 (퍼센트 숫자 더 크고 진하게)
+    # 텍스트 스타일링 (선명도 향상)
     for autotext in autotexts:
         autotext.set_color('white')
-        autotext.set_fontsize(22)  # 16→22로 증가
-        autotext.set_fontweight('black')  # 더 굵게
+        autotext.set_fontsize(16)
+        autotext.set_fontweight('bold')
     
     for text in texts:
         text.set_fontsize(18)
@@ -190,7 +190,7 @@ with col2:
 
 # 시간 사용 패턴 차트 - 더 진한 색상
 st.markdown("""
-<h2 style='
+<h3 style='
     color: #000000; 
     font-weight: 900; 
     font-size: 2.0rem; 
@@ -198,7 +198,7 @@ st.markdown("""
     margin-bottom: 1rem;
     text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
     font-family: NanumGothic, sans-serif;
-'>⏰ 시간 사용 패턴</h2>
+'>⏰ 시간 사용 패턴</h3>
 """, unsafe_allow_html=True)
 
 col1, col2 = st.columns(2)
@@ -219,11 +219,7 @@ with col1:
     ax2.fill_between(dates, sleep_hours, alpha=0.3, color='#FF6B9D')
     
     ax2.set_title('수면시간 변화', fontsize=20, fontweight='bold', color='#000000', pad=20)
-    ax2.set_ylabel('시간', fontsize=18, color='#000000', fontweight='bold')  # Y축 라벨 크기 증가
-    
-    # X축 라벨을 간단하게 범주화
-    ax2.set_xticks(range(len(dates)))
-    ax2.set_xticklabels(['1일차', '2일차', '3일차'], fontsize=14, fontweight='bold')  # X축 라벨 크기 증가하고 범주화
+    ax2.set_ylabel('시간', fontsize=16, color='#000000', fontweight='bold')
     ax2.grid(True, alpha=0.3, color='#E8E8E8', linewidth=1)
     ax2.set_facecolor('white')
     
@@ -233,9 +229,6 @@ with col1:
     ax2.spines['left'].set_color('#CCCCCC')
     ax2.spines['bottom'].set_color('#CCCCCC')
     ax2.tick_params(colors='#666666', labelsize=12)
-    
-    # Y축 틱 크기 증가
-    ax2.tick_params(axis='y', labelsize=14)
     
     fig2.patch.set_facecolor('white')
     st.pyplot(fig2, use_container_width=True)
@@ -256,10 +249,10 @@ with col2:
         ax3.text(i, v + 0.1, str(v) + '시간', ha='center', va='bottom', 
                 fontweight='bold', fontsize=14, color='#000000')
     
-    ax3.set_title('📚 공부시간 분포', fontsize=20, fontweight='bold', color='#000000', pad=20)
-    ax3.set_ylabel('시간', fontsize=18, color='#000000', fontweight='bold')  # Y축 라벨 크기 증가
+    ax3.set_title('공부시간 분포', fontsize=20, fontweight='bold', color='#000000', pad=20)
+    ax3.set_ylabel('시간', fontsize=16, color='#000000', fontweight='bold')
     ax3.set_xticks(range(len(dates)))
-    ax3.set_xticklabels(['1일차', '2일차', '3일차'], fontsize=14, fontweight='bold')  # X축 라벨 크기 증가하고 범주화
+    ax3.set_xticklabels([d.strftime('%m/%d') for d in dates], fontsize=12, fontweight='bold')
     ax3.grid(True, alpha=0.3, axis='y', color='#E8E8E8', linewidth=1)
     ax3.set_facecolor('white')
     
@@ -270,15 +263,12 @@ with col2:
     ax3.spines['bottom'].set_color('#CCCCCC')
     ax3.tick_params(colors='#666666', labelsize=12)
     
-    # Y축 틱 크기 증가
-    ax3.tick_params(axis='y', labelsize=14)
-    
     fig3.patch.set_facecolor('white')
     st.pyplot(fig3, use_container_width=True)
 
 # 종합 히트맵 - 더 진한 색상
 st.markdown("""
-<h2 style='
+<h3 style='
     color: #000000; 
     font-weight: 900; 
     font-size: 2.0rem; 
@@ -286,7 +276,7 @@ st.markdown("""
     margin-bottom: 1rem;
     text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
     font-family: NanumGothic, sans-serif;
-'>🔥 종합 활동 히트맵</h2>
+'>🔥 종합 활동 히트맵</h3>
 """, unsafe_allow_html=True)
 
 # 히트맵용 데이터 준비
@@ -318,7 +308,7 @@ st.pyplot(fig4, use_container_width=True)
 
 # 통계 요약 - 2x2 레이아웃으로 변경
 st.markdown("""
-<h2 style='
+<h3 style='
     color: #2C3E50; 
     font-weight: 800; 
     font-size: 2.2rem; 
@@ -326,7 +316,7 @@ st.markdown("""
     margin-bottom: 1rem;
     text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
     font-family: NanumGothic, sans-serif;
-'>📈 주요 통계</h2>
+'>📈 주요 통계</h3>
 """, unsafe_allow_html=True)
 
 # 2x2 그리드 레이아웃
@@ -336,7 +326,6 @@ row2_col1, row2_col2 = st.columns(2)
 with row1_col1:
     avg_sleep = df['수면시간'].mean()
     delta_sleep = f"{avg_sleep-6:.1f}시간" if avg_sleep >= 6 else f"{avg_sleep-6:.1f}시간"
-    delta_color = "#0066CC" if avg_sleep >= 6 else "#FF3333"  # 파란색 또는 빨간색
     st.markdown(f"""
     <div style='
         background-color: #F8F9FA; 
@@ -352,18 +341,18 @@ with row1_col1:
             font-weight: 900; 
             margin-bottom: 0.5rem;
             font-family: NanumGothic, sans-serif;
-            font-size: 1.0rem;
+            font-size: 1rem;
         '>평균 수면시간</h3>
         <p style='
             color: #000000; 
-            font-size: 1.8rem; 
+            font-size: 2.2rem; 
             font-weight: 900; 
             margin: 0.5rem 0;
             font-family: NanumGothic, sans-serif;
         '>{avg_sleep:.1f}시간</p>
         <p style='
-            color: {delta_color}; 
-            font-size: 0.9rem; 
+            color: #333333; 
+            font-size: 1.0rem; 
             margin: 0;
             font-family: NanumGothic, sans-serif;
             font-weight: 900;
@@ -374,7 +363,6 @@ with row1_col1:
 with row1_col2:
     avg_study = df['공부시간'].mean()
     delta_study = f"{avg_study-4:.1f}시간" if avg_study >= 4 else f"{avg_study-4:.1f}시간"
-    delta_color = "#0066CC" if avg_study >= 4 else "#FF3333"  # 파란색 또는 빨간색
     st.markdown(f"""
     <div style='
         background-color: #F8F9FA; 
@@ -390,18 +378,18 @@ with row1_col2:
             font-weight: 900; 
             margin-bottom: 0.5rem;
             font-family: NanumGothic, sans-serif;
-            font-size: 1.0rem;
+            font-size: 1rem;
         '>평균 공부시간</h3>
         <p style='
             color: #000000; 
-            font-size: 1.8rem; 
+            font-size: 2.2rem; 
             font-weight: 900; 
             margin: 0.5rem 0;
             font-family: NanumGothic, sans-serif;
         '>{avg_study:.1f}시간</p>
         <p style='
-            color: {delta_color}; 
-            font-size: 0.9rem; 
+            color: #333333; 
+            font-size: 1.0rem; 
             margin: 0;
             font-family: NanumGothic, sans-serif;
             font-weight: 900;
@@ -426,18 +414,18 @@ with row2_col1:
             font-weight: 900; 
             margin-bottom: 0.5rem;
             font-family: NanumGothic, sans-serif;
-            font-size: 1.0rem;
+            font-size: 1rem;
         '>총 운동시간</h3>
         <p style='
             color: #000000; 
-            font-size: 1.8rem; 
+            font-size: 2.2rem; 
             font-weight: 900; 
             margin: 0.5rem 0;
             font-family: NanumGothic, sans-serif;
         '>{total_exercise}시간</p>
         <p style='
             color: #FF3333; 
-            font-size: 0.9rem; 
+            font-size: 1.0rem; 
             margin: 0;
             font-family: NanumGothic, sans-serif;
             font-weight: 900;
@@ -448,7 +436,6 @@ with row2_col1:
 with row2_col2:
     good_mood_ratio = (df['기분'] == '좋음').sum() / len(df) * 100
     delta_mood = f"{good_mood_ratio-50:.0f}%" if good_mood_ratio >= 50 else f"{good_mood_ratio-50:.0f}%"
-    delta_color = "#0066CC" if good_mood_ratio >= 50 else "#FF3333"  # 파란색 또는 빨간색
     st.markdown(f"""
     <div style='
         background-color: #F8F9FA; 
@@ -464,18 +451,18 @@ with row2_col2:
             font-weight: 900; 
             margin-bottom: 0.5rem;
             font-family: NanumGothic, sans-serif;
-            font-size: 1.0rem;
+            font-size: 1rem;
         '>좋은 기분 비율</h3>
         <p style='
             color: #000000; 
-            font-size: 1.8rem; 
+            font-size: 2.2rem; 
             font-weight: 900; 
             margin: 0.5rem 0;
             font-family: NanumGothic, sans-serif;
         '>{good_mood_ratio:.0f}%</p>
         <p style='
-            color: {delta_color}; 
-            font-size: 0.9rem; 
+            color: #333333; 
+            font-size: 1.0rem; 
             margin: 0;
             font-family: NanumGothic, sans-serif;
             font-weight: 900;
@@ -485,7 +472,7 @@ with row2_col2:
 
 # 추천사항 - 더 진한 색상
 st.markdown("""
-<h2 style='
+<h3 style='
     color: #000000; 
     font-weight: 900; 
     font-size: 2.0rem; 
@@ -493,7 +480,7 @@ st.markdown("""
     margin-bottom: 1rem;
     text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
     font-family: NanumGothic, sans-serif;
-'>💡 개선 제안</h2>
+'>💡 개선 제안</h3>
 """, unsafe_allow_html=True)
 
 col1, col2, col3 = st.columns(3)
@@ -511,7 +498,7 @@ with col1:
     '>
         <p style='
             color: #000000; 
-            font-size: 1.0rem; 
+            font-size: 1.2rem; 
             font-weight: 900; 
             margin: 0;
             font-family: NanumGothic, sans-serif;
@@ -532,7 +519,7 @@ with col2:
     '>
         <p style='
             color: #000000; 
-            font-size: 1.0rem; 
+            font-size: 1.2rem; 
             font-weight: 900; 
             margin: 0;
             font-family: NanumGothic, sans-serif;
@@ -553,7 +540,7 @@ with col3:
     '>
         <p style='
             color: #000000; 
-            font-size: 1.0rem; 
+            font-size: 1.2rem; 
             font-weight: 900; 
             margin: 0;
             font-family: NanumGothic, sans-serif;
@@ -561,14 +548,3 @@ with col3:
     </div>
     """, unsafe_allow_html=True)
 
-# 폰트 상태 확인 (디버깅용)
-st.markdown("---")
-with st.expander("🔧 폰트 설정 정보"):
-    current_font = plt.rcParams['font.family']
-    st.write(f"**현재 사용 폰트:** {current_font}")
-    st.write(f"**나눔고딕 로드 상태:** {'✅ 성공' if font_loaded else '❌ 실패'}")
-    
-    if os.path.exists('./fonts/NanumGothic.ttf'):
-        st.write("**폰트 파일:** ✅ fonts/NanumGothic.ttf 존재")
-    else:
-        st.write("**폰트 파일:** ❌ fonts/NanumGothic.ttf 없음")
