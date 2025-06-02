@@ -42,7 +42,6 @@ def setup_korean_font():
             plt.rcParams['figure.dpi'] = 100
             plt.rcParams['savefig.dpi'] = 100
             
-            st.success(f"✅ 나눔고딕 폰트 설정 완료: {font_path}")
             return True
             
         else:
@@ -154,7 +153,7 @@ with col2:
     
     mood_counts = df['기분'].value_counts()
     # 파스텔 톤 컬러 (선명하게)
-    colors = ['#FF9AA2', '#B5EAD7', '#A8E6CF']  # 더 선명한 파스텔
+    colors = ['#FF9AA2', '##53d2d9', '#A8E6CF']  # 더 선명한 파스텔
     
     # 도넛 차트 생성 - 33% 텍스트 크기 증가
     wedges, texts, autotexts = ax1.pie(mood_counts.values, 
@@ -164,7 +163,7 @@ with col2:
                                       startangle=90,
                                       pctdistance=0.85,
                                       wedgeprops=dict(width=0.5, edgecolor='white', linewidth=3),
-                                      textprops={'fontweight': 'bold', 'fontsize': 14})
+                                      textprops={'fontweight': 'bold', 'fontsize': 20})
     
     # 가운데 원 추가 (도넛 효과)
     centre_circle = Circle((0,0), 0.50, fc='white', alpha=1)
