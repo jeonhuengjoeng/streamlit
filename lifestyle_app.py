@@ -307,7 +307,7 @@ ax4.set_facecolor('white')
 fig4.patch.set_facecolor('white')
 st.pyplot(fig4, use_container_width=True)
 
-# 통계 요약 - HTML로 더 선명하게
+# 통계 요약 - 2x2 레이아웃으로 변경
 st.markdown("""
 <h2 style='
     color: #2C3E50; 
@@ -320,23 +320,156 @@ st.markdown("""
 '>📈 주요 통계</h2>
 """, unsafe_allow_html=True)
 
-col1, col2, col3, col4 = st.columns(4)
+# 2x2 그리드 레이아웃
+row1_col1, row1_col2 = st.columns(2)
+row2_col1, row2_col2 = st.columns(2)
 
-with col1:
+with row1_col1:
     avg_sleep = df['수면시간'].mean()
-    st.metric("평균 수면시간", f"{avg_sleep:.1f}시간", delta=f"{avg_sleep-6:.1f}시간")
+    delta_sleep = f"{avg_sleep-6:.1f}시간" if avg_sleep >= 6 else f"{avg_sleep-6:.1f}시간"
+    st.markdown(f"""
+    <div style='
+        background-color: #F8F9FA; 
+        padding: 1.5rem; 
+        border-radius: 15px; 
+        margin: 0.5rem;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        border: 2px solid #E9ECEF;
+        text-align: center;
+    '>
+        <h3 style='
+            color: #2C3E50; 
+            font-weight: bold; 
+            margin-bottom: 0.5rem;
+            font-family: NanumGothic, sans-serif;
+            font-size: 1.1rem;
+        '>평균 수면시간</h3>
+        <p style='
+            color: #2C3E50; 
+            font-size: 2rem; 
+            font-weight: 900; 
+            margin: 0.5rem 0;
+            font-family: NanumGothic, sans-serif;
+        '>{avg_sleep:.1f}시간</p>
+        <p style='
+            color: #666; 
+            font-size: 0.9rem; 
+            margin: 0;
+            font-family: NanumGothic, sans-serif;
+            font-weight: bold;
+        '>기준 대비: {delta_sleep}</p>
+    </div>
+    """, unsafe_allow_html=True)
 
-with col2:
+with row1_col2:
     avg_study = df['공부시간'].mean()
-    st.metric("평균 공부시간", f"{avg_study:.1f}시간", delta=f"{avg_study-4:.1f}시간")
+    delta_study = f"{avg_study-4:.1f}시간" if avg_study >= 4 else f"{avg_study-4:.1f}시간"
+    st.markdown(f"""
+    <div style='
+        background-color: #F8F9FA; 
+        padding: 1.5rem; 
+        border-radius: 15px; 
+        margin: 0.5rem;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        border: 2px solid #E9ECEF;
+        text-align: center;
+    '>
+        <h3 style='
+            color: #2C3E50; 
+            font-weight: bold; 
+            margin-bottom: 0.5rem;
+            font-family: NanumGothic, sans-serif;
+            font-size: 1.1rem;
+        '>평균 공부시간</h3>
+        <p style='
+            color: #2C3E50; 
+            font-size: 2rem; 
+            font-weight: 900; 
+            margin: 0.5rem 0;
+            font-family: NanumGothic, sans-serif;
+        '>{avg_study:.1f}시간</p>
+        <p style='
+            color: #666; 
+            font-size: 0.9rem; 
+            margin: 0;
+            font-family: NanumGothic, sans-serif;
+            font-weight: bold;
+        '>기준 대비: {delta_study}</p>
+    </div>
+    """, unsafe_allow_html=True)
 
-with col3:
+with row2_col1:
     total_exercise = df['운동시간'].sum()
-    st.metric("총 운동시간", f"{total_exercise}시간", delta="운동 필요!")
+    st.markdown(f"""
+    <div style='
+        background-color: #F8F9FA; 
+        padding: 1.5rem; 
+        border-radius: 15px; 
+        margin: 0.5rem;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        border: 2px solid #E9ECEF;
+        text-align: center;
+    '>
+        <h3 style='
+            color: #2C3E50; 
+            font-weight: bold; 
+            margin-bottom: 0.5rem;
+            font-family: NanumGothic, sans-serif;
+            font-size: 1.1rem;
+        '>총 운동시간</h3>
+        <p style='
+            color: #2C3E50; 
+            font-size: 2rem; 
+            font-weight: 900; 
+            margin: 0.5rem 0;
+            font-family: NanumGothic, sans-serif;
+        '>{total_exercise}시간</p>
+        <p style='
+            color: #FF6B6B; 
+            font-size: 0.9rem; 
+            margin: 0;
+            font-family: NanumGothic, sans-serif;
+            font-weight: bold;
+        '>운동 필요!</p>
+    </div>
+    """, unsafe_allow_html=True)
 
-with col4:
+with row2_col2:
     good_mood_ratio = (df['기분'] == '좋음').sum() / len(df) * 100
-    st.metric("좋은 기분 비율", f"{good_mood_ratio:.0f}%", delta=f"{good_mood_ratio-50:.0f}%")
+    delta_mood = f"{good_mood_ratio-50:.0f}%" if good_mood_ratio >= 50 else f"{good_mood_ratio-50:.0f}%"
+    st.markdown(f"""
+    <div style='
+        background-color: #F8F9FA; 
+        padding: 1.5rem; 
+        border-radius: 15px; 
+        margin: 0.5rem;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        border: 2px solid #E9ECEF;
+        text-align: center;
+    '>
+        <h3 style='
+            color: #2C3E50; 
+            font-weight: bold; 
+            margin-bottom: 0.5rem;
+            font-family: NanumGothic, sans-serif;
+            font-size: 1.1rem;
+        '>좋은 기분 비율</h3>
+        <p style='
+            color: #2C3E50; 
+            font-size: 2rem; 
+            font-weight: 900; 
+            margin: 0.5rem 0;
+            font-family: NanumGothic, sans-serif;
+        '>{good_mood_ratio:.0f}%</p>
+        <p style='
+            color: #666; 
+            font-size: 0.9rem; 
+            margin: 0;
+            font-family: NanumGothic, sans-serif;
+            font-weight: bold;
+        '>기준 대비: {delta_mood}</p>
+    </div>
+    """, unsafe_allow_html=True)
 
 # 추천사항 - HTML로 더 선명하게
 st.markdown("""
@@ -354,13 +487,67 @@ st.markdown("""
 col1, col2, col3 = st.columns(3)
 
 with col1:
-    st.info("🌙 **수면시간을 7-8시간으로 늘려보세요!**")
+    st.markdown("""
+    <div style='
+        background-color: #E3F2FD; 
+        padding: 1.5rem; 
+        border-radius: 15px; 
+        margin: 0.5rem;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        border: 2px solid #BBDEFB;
+        text-align: center;
+    '>
+        <p style='
+            color: #1A1A1A; 
+            font-size: 1.1rem; 
+            font-weight: bold; 
+            margin: 0;
+            font-family: NanumGothic, sans-serif;
+        '>🌙 수면시간을 7-8시간으로 늘려보세요!</p>
+    </div>
+    """, unsafe_allow_html=True)
 
 with col2:
-    st.warning("🏃‍♂️ **운동시간을 추가해보시는 것은 어떨까요?**")
+    st.markdown("""
+    <div style='
+        background-color: #FFF3E0; 
+        padding: 1.5rem; 
+        border-radius: 15px; 
+        margin: 0.5rem;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        border: 2px solid #FFCC80;
+        text-align: center;
+    '>
+        <p style='
+            color: #1A1A1A; 
+            font-size: 1.1rem; 
+            font-weight: bold; 
+            margin: 0;
+            font-family: NanumGothic, sans-serif;
+        '>🏃‍♂️ 운동시간을 추가해보시는 것은 어떨까요?</p>
+    </div>
+    """, unsafe_allow_html=True)
 
 with col3:
-    st.success("📚 **꾸준한 공부 패턴이 좋습니다!**")
+    st.markdown("""
+    <div style='
+        background-color: #E8F5E8; 
+        padding: 1.5rem; 
+        border-radius: 15px; 
+        margin: 0.5rem;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        border: 2px solid #A5D6A7;
+        text-align: center;
+    '>
+        <p style='
+            color: #1A1A1A; 
+            font-size: 1.1rem; 
+            font-weight: bold; 
+            margin: 0;
+            font-family: NanumGothic, sans-serif;
+        '>📚 꾸준한 공부 패턴이 좋습니다!</p>
+    </div>
+    """, unsafe_allow_html=True)
 
 # 폰트 상태 확인 (디버깅용)
 st.markdown("---")
