@@ -10,17 +10,40 @@ import platform
 # 페이지 설정
 st.set_page_config(page_title="🌟 라이프 트래커", layout="wide")
 
-# 운영체제별 한글 폰트 설정
+# 한글 폰트 설정 - 여러 폰트를 순서대로 시도
 def set_korean_font():
-    system = platform.system()
-    if system == 'Darwin':  # macOS
-        plt.rcParams['font.family'] = 'AppleGothic'
-    elif system == 'Windows':  # Windows
-        plt.rcParams['font.family'] = 'Malgun Gothic'
-    else:  # Linux 또는 기타
-        plt.rcParams['font.family'] = 'DejaVu Sans'
+    import matplotlib.font_manager as fm
     
+    # 사용 가능한 한글 폰트 목록 (우선순위 순)
+    korean_fonts = [
+        'Malgun Gothic',     # Windows
+        'AppleGothic',       # macOS  
+        'NanumGothic',       # 나눔고딕
+        'NanumBarunGothic',  # 나눔바른고딕
+        'Noto Sans CJK KR',  # 구글 노토
+        'Arial Unicode MS',  # 유니코드 지원
+        'DejaVu Sans'        # 기본 대체
+    ]
+    
+    # 설치된 폰트 중에서 사용 가능한 첫 번째 한글 폰트 찾기
+    available_fonts = [f.name for f in fm.fontManager.ttflist]
+    
+    for font in korean_fonts:
+        if font in available_fonts:
+            plt.rcParams['font.family'] = font
+            print(f"한글 폰트 설정: {font}")
+            break
+    else:
+        # 한글 폰트를 찾지 못한 경우
+        plt.rcParams['font.family'] = 'DejaVu Sans'
+        print("한글 폰트를 찾지 못했습니다. 기본 폰트를 사용합니다.")
+    
+    # 마이너스 기호 깨짐 방지
     plt.rcParams['axes.unicode_minus'] = False
+    
+    # 폰트 크기 및 기타 설정
+    plt.rcParams['font.size'] = 12
+    plt.rcParams['figure.titlesize'] = 16
 
 set_korean_font()
 
@@ -86,19 +109,21 @@ with col2:
     centre_circle = Circle((0,0), 0.50, fc='white', alpha=1)
     ax1.add_artist(centre_circle)
     
-    # 스타일링
-    ax1.set_title('😊 기분 분포', fontsize=24, fontweight='bold', pad=30, color='#2C3E50')
+    # 스타일링 - 명시적으로 폰트 설정
+    ax1.set_title('😊 기분 분포', fontsize=24, fontweight='bold', pad=30, color='#2C3E50', fontfamily='DejaVu Sans')
     
-    # 텍스트 스타일링
+    # 텍스트 스타일링 - 각 텍스트에 폰트 명시
     for autotext in autotexts:
         autotext.set_color('white')
         autotext.set_fontsize(14)
         autotext.set_fontweight('bold')
+        autotext.set_fontfamily('DejaVu Sans')
     
     for text in texts:
         text.set_fontsize(16)
         text.set_fontweight('bold')
         text.set_color('#2C3E50')
+        text.set_fontfamily('DejaVu Sans')
     
     ax1.set_facecolor('white')
     fig1.patch.set_facecolor('white')
@@ -125,8 +150,8 @@ with col1:
     # 배경 그라데이션
     ax2.fill_between(dates, sleep_hours, alpha=0.3, color='#FFB3E6')
     
-    ax2.set_title('💤 수면시간 변화', fontsize=18, fontweight='bold', color='#2C3E50', pad=20)
-    ax2.set_ylabel('시간', fontsize=14, color='#2C3E50')
+    ax2.set_title('💤 수면시간 변화', fontsize=18, fontweight='bold', color='#2C3E50', pad=20, fontfamily='DejaVu Sans')
+    ax2.set_ylabel('시간', fontsize=14, color='#2C3E50', fontfamily='DejaVu Sans')
     ax2.grid(True, alpha=0.3, color='#E8E8E8')
     ax2.set_facecolor('white')
     
@@ -156,8 +181,8 @@ with col2:
         ax3.text(i, v + 0.1, str(v) + '시간', ha='center', va='bottom', 
                 fontweight='bold', fontsize=12, color='#2C3E50')
     
-    ax3.set_title('📚 공부시간 분포', fontsize=18, fontweight='bold', color='#2C3E50', pad=20)
-    ax3.set_ylabel('시간', fontsize=14, color='#2C3E50')
+    ax3.set_title('📚 공부시간 분포', fontsize=18, fontweight='bold', color='#2C3E50', pad=20, fontfamily='DejaVu Sans')
+    ax3.set_ylabel('시간', fontsize=14, color='#2C3E50', fontfamily='DejaVu Sans')
     ax3.set_xticks(range(len(dates)))
     ax3.set_xticklabels([d.strftime('%m/%d') for d in dates])
     ax3.grid(True, alpha=0.3, axis='y', color='#E8E8E8')
@@ -191,9 +216,9 @@ sns.heatmap(heatmap_data, annot=True, fmt='d', cmap=cmap,
             cbar_kws={'label': '시간 (hours)'}, ax=ax4,
             linewidths=2, linecolor='white', square=True)
 
-ax4.set_title('📊 일별 활동 패턴', fontsize=20, fontweight='bold', color='#2C3E50', pad=20)
-ax4.set_ylabel('활동 유형', fontsize=14, color='#2C3E50')
-ax4.set_xlabel('날짜', fontsize=14, color='#2C3E50')
+ax4.set_title('📊 일별 활동 패턴', fontsize=20, fontweight='bold', color='#2C3E50', pad=20, fontfamily='DejaVu Sans')
+ax4.set_ylabel('활동 유형', fontsize=14, color='#2C3E50', fontfamily='DejaVu Sans')
+ax4.set_xlabel('날짜', fontsize=14, color='#2C3E50', fontfamily='DejaVu Sans')
 
 # 축 레이블 스타일링
 ax4.tick_params(colors='#2C3E50')
