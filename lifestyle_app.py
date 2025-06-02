@@ -209,7 +209,7 @@ with col1:
     # 배경 그라데이션
     ax2.fill_between(dates, sleep_hours, alpha=0.3, color='#FF6B9D')
     
-    ax2.set_title('수면시간 변화', fontsize=20, fontweight='bold', color='#2C3E50', pad=20)
+    ax2.set_title('수면시간 변화', fontsize=24, fontweight='bold', color='#2C3E50', pad=20)
     ax2.set_ylabel('시간', fontsize=16, color='#2C3E50', fontweight='bold')
     ax2.grid(True, alpha=0.3, color='#E8E8E8', linewidth=1)
     ax2.set_facecolor('white')
@@ -240,7 +240,7 @@ with col2:
         ax3.text(i, v + 0.1, str(v) + '시간', ha='center', va='bottom', 
                 fontweight='bold', fontsize=14, color='#2C3E50')
     
-    ax3.set_title('📚 공부시간 분포', fontsize=20, fontweight='bold', color='#2C3E50', pad=20)
+    ax3.set_title('공부시간 분포', fontsize=22, fontweight='bold', color='#2C3E50', pad=20)
     ax3.set_ylabel('시간', fontsize=16, color='#2C3E50', fontweight='bold')
     ax3.set_xticks(range(len(dates)))
     ax3.set_xticklabels([d.strftime('%m/%d') for d in dates], fontsize=12, fontweight='bold')
@@ -286,7 +286,7 @@ sns.heatmap(heatmap_data, annot=True, fmt='d', cmap=cmap,
             linewidths=3, linecolor='white', square=True,
             annot_kws={'fontsize': 14, 'fontweight': 'bold'})
 
-ax4.set_title(' 일별 활동 패턴', fontsize=22, fontweight='bold', color='#2C3E50', pad=20)
+ax4.set_title(' 일별 활동 패턴', fontsize=24, fontweight='bold', color='#2C3E50', pad=20)
 ax4.set_ylabel('활동 유형', fontsize=16, color='#2C3E50', fontweight='bold')
 ax4.set_xlabel('날짜', fontsize=16, color='#2C3E50', fontweight='bold')
 
@@ -327,13 +327,13 @@ with row1_col1:
         border: 2px solid #E9ECEF;
         text-align: center;
     '>
-        <h3 style='
-            color: #2C3E50; 
+        <p style='
+            color: #1A1A1A; 
+            font-size: 3rem; 
             font-weight: bold; 
-            margin-bottom: 0.5rem;
+            margin: 0;
             font-family: NanumGothic, sans-serif;
-            font-size: 1.1rem;
-        '>평균 수면시간</h3>
+        '>평균 수면시간</p>
         <p style='
             color: #2C3E50; 
             font-size: 2rem; 
@@ -364,13 +364,13 @@ with row1_col2:
         border: 2px solid #E9ECEF;
         text-align: center;
     '>
-        <h3 style='
-            color: #2C3E50; 
+        <p style='
+            color: #1A1A1A; 
+            font-size: 3rem; 
             font-weight: bold; 
-            margin-bottom: 0.5rem;
+            margin: 0;
             font-family: NanumGothic, sans-serif;
-            font-size: 1.1rem;
-        '>평균 공부시간</h3>
+        '>평균 공부시간</p>
         <p style='
             color: #2C3E50; 
             font-size: 2rem; 
@@ -400,13 +400,13 @@ with row2_col1:
         border: 2px solid #E9ECEF;
         text-align: center;
     '>
-        <h3 style='
-            color: #2C3E50; 
+        <p style='
+            color: #1A1A1A; 
+            font-size: 3rem; 
             font-weight: bold; 
-            margin-bottom: 0.5rem;
+            margin: 0;
             font-family: NanumGothic, sans-serif;
-            font-size: 1.1rem;
-        '>총 운동시간</h3>
+        '>총 운동시간</p>
         <p style='
             color: #2C3E50; 
             font-size: 2rem; 
@@ -437,13 +437,13 @@ with row2_col2:
         border: 2px solid #E9ECEF;
         text-align: center;
     '>
-        <h3 style='
-            color: #2C3E50; 
+        <p style='
+            color: #1A1A1A; 
+            font-size: 3rem; 
             font-weight: bold; 
-            margin-bottom: 0.5rem;
+            margin: 0;
             font-family: NanumGothic, sans-serif;
-            font-size: 1.1rem;
-        '>좋은 기분 비율</h3>
+        '>좋은 기분 비율</p>
         <p style='
             color: #2C3E50; 
             font-size: 2rem; 
