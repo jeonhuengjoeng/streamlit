@@ -29,11 +29,11 @@ def setup_korean_font():
             plt.rcParams['font.family'] = ['NanumGothic', 'sans-serif']
             plt.rcParams['font.size'] = 10
             plt.rcParams['axes.labelsize'] = 12
-            plt.rcParams['axes.titlesize'] = 14
+            plt.rcParams['axes.titlesize'] = 12
             plt.rcParams['xtick.labelsize'] = 10
             plt.rcParams['ytick.labelsize'] = 10
             plt.rcParams['legend.fontsize'] = 10
-            plt.rcParams['figure.titlesize'] = 16
+            plt.rcParams['figure.titlesize'] = 14
             
             # 한글 관련 설정
             plt.rcParams['axes.unicode_minus'] = False
