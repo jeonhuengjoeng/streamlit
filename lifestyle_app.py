@@ -353,7 +353,7 @@ with col2:
             ax3.text(i, v + 0.1, str(v) + 'h', ha='center', va='bottom', 
                     fontweight='bold', fontsize=9, color='#000000')
     
-    ax3.set_title(f'📚 공부시간 분포 (최근 {len(recent_df)}일)', fontsize=20, fontweight='bold', color='#000000', pad=20)
+    ax3.set_title(f' 공부시간 분포 (최근 {len(recent_df)}일)', fontsize=20, fontweight='bold', color='#000000', pad=20)
     ax3.set_ylabel('시간(시간)', fontsize=18, color='#000000', fontweight='bold')
     
     # X축 라벨 설정
@@ -415,7 +415,7 @@ sns.heatmap(heatmap_data, annot=True, fmt='d', cmap=cmap,
             linewidths=3, linecolor='white', square=True,
             annot_kws={'fontsize': 14, 'fontweight': 'bold'})
 
-ax4.set_title('📊 일별 활동 패턴 (최근 30일)', fontsize=22, fontweight='bold', color='#000000', pad=20)
+ax4.set_title('일별 활동 패턴 (최근 30일)', fontsize=22, fontweight='bold', color='#000000', pad=20)
 ax4.set_ylabel('활동 유형', fontsize=16, color='#000000', fontweight='bold')
 ax4.set_xlabel('날짜', fontsize=16, color='#000000', fontweight='bold')
 
