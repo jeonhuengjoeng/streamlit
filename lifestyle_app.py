@@ -805,7 +805,8 @@ with col3:
             font-family: NanumGothic, sans-serif;
         '>📚 꾸준한 공부 패턴이 좋습니다!</p>
     </div>
-    """, unsafe_allow_html=True)import streamlit as st
+    """, unsafe_allow_html=True)
+import streamlit as st
 import matplotlib.pyplot as plt
 import seaborn as sns
 import pandas as pd
