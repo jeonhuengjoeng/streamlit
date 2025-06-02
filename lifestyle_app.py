@@ -71,16 +71,7 @@ st.markdown("""
         background-color: white;
     }
     /* 제목들을 매우 선명하고 굵게 */
-    h1 {
-        color: #2C3E50 !important;
-        font-weight: 900 !important;
-        font-size: 3.5rem !important;
-        text-align: center !important;
-        margin-bottom: 2rem !important;
-        text-shadow: 1px 1px 2px rgba(0,0,0,0.1) !important;
-        -webkit-font-smoothing: antialiased !important;
-        -moz-osx-font-smoothing: grayscale !important;
-    }
+
     h2 {
         color: #2C3E50 !important;
         font-weight: 800 !important;
@@ -130,15 +121,15 @@ df = pd.DataFrame(data)
 
 # 메인 타이틀 - HTML로 더 선명하게
 st.markdown("""
-<h1 style='
+<h2 style='
     text-align: center; 
     color: #2C3E50; 
-    font-weight: 900; 
+    font-weight: 500; 
     font-size: 3.5rem; 
     margin-bottom: 2rem;
     text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
     font-family: NanumGothic, sans-serif;
-'>🌟 라이프 트래커 대시보드</h1>
+'>🌟 라이프 트래커 대시보드</h2>
 """, unsafe_allow_html=True)
 
 if not font_loaded:
@@ -190,7 +181,7 @@ with col2:
 
 # 시간 사용 패턴 차트 - HTML로 더 선명하게
 st.markdown("""
-<h2 style='
+<h3 style='
     color: #2C3E50; 
     font-weight: 800; 
     font-size: 2.2rem; 
@@ -198,7 +189,7 @@ st.markdown("""
     margin-bottom: 1rem;
     text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
     font-family: NanumGothic, sans-serif;
-'>⏰ 시간 사용 패턴</h2>
+'>⏰ 시간 사용 패턴</h3>
 """, unsafe_allow_html=True)
 
 col1, col2 = st.columns(2)
@@ -268,7 +259,7 @@ with col2:
 
 # 종합 히트맵 - HTML로 더 선명하게
 st.markdown("""
-<h2 style='
+<h3 style='
     color: #2C3E50; 
     font-weight: 800; 
     font-size: 2.2rem; 
@@ -276,7 +267,7 @@ st.markdown("""
     margin-bottom: 1rem;
     text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
     font-family: NanumGothic, sans-serif;
-'>🔥 종합 활동 히트맵</h2>
+'>🔥 종합 활동 히트맵</h3>
 """, unsafe_allow_html=True)
 
 # 히트맵용 데이터 준비
@@ -308,7 +299,7 @@ st.pyplot(fig4, use_container_width=True)
 
 # 통계 요약 - 2x2 레이아웃으로 변경
 st.markdown("""
-<h2 style='
+<h3 style='
     color: #2C3E50; 
     font-weight: 800; 
     font-size: 2.2rem; 
@@ -316,7 +307,7 @@ st.markdown("""
     margin-bottom: 1rem;
     text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
     font-family: NanumGothic, sans-serif;
-'>📈 주요 통계</h2>
+'>📈 주요 통계</h3>
 """, unsafe_allow_html=True)
 
 # 2x2 그리드 레이아웃
@@ -472,7 +463,7 @@ with row2_col2:
 
 # 추천사항 - HTML로 더 선명하게
 st.markdown("""
-<h2 style='
+<h3 style='
     color: #2C3E50; 
     font-weight: 800; 
     font-size: 2.2rem; 
@@ -480,7 +471,7 @@ st.markdown("""
     margin-bottom: 1rem;
     text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
     font-family: NanumGothic, sans-serif;
-'>💡 개선 제안</h2>
+'>💡 개선 제안</h3>
 """, unsafe_allow_html=True)
 
 col1, col2, col3 = st.columns(3)
