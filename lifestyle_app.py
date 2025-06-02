@@ -129,7 +129,7 @@ st.markdown("""
     margin-bottom: 2rem;
     text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
     font-family: NanumGothic, sans-serif;
-'>🌟 라이프 트래커 대시보드</h2>
+'>🌟 라이프 트래커</h2>
 """, unsafe_allow_html=True)
 
 if not font_loaded:
