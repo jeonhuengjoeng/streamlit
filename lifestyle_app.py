@@ -71,9 +71,33 @@ st.markdown("""
     .stApp {
         background-color: white;
     }
-    h1, h2, h3 {
-        color: #2C3E50;
-        font-weight: bold;
+    /* 제목들을 매우 선명하고 굵게 */
+    h1 {
+        color: #2C3E50 !important;
+        font-weight: 900 !important;
+        font-size: 3.5rem !important;
+        text-align: center !important;
+        margin-bottom: 2rem !important;
+        text-shadow: 1px 1px 2px rgba(0,0,0,0.1) !important;
+        -webkit-font-smoothing: antialiased !important;
+        -moz-osx-font-smoothing: grayscale !important;
+    }
+    h2 {
+        color: #2C3E50 !important;
+        font-weight: 800 !important;
+        font-size: 2.2rem !important;
+        margin-top: 2rem !important;
+        margin-bottom: 1rem !important;
+        text-shadow: 1px 1px 2px rgba(0,0,0,0.1) !important;
+        -webkit-font-smoothing: antialiased !important;
+        -moz-osx-font-smoothing: grayscale !important;
+    }
+    h3 {
+        color: #2C3E50 !important;
+        font-weight: 700 !important;
+        font-size: 1.8rem !important;
+        -webkit-font-smoothing: antialiased !important;
+        -moz-osx-font-smoothing: grayscale !important;
     }
     .metric-container {
         background-color: #F8F9FA;
@@ -82,10 +106,15 @@ st.markdown("""
         margin: 0.5rem;
         box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     }
-    /* 선명한 텍스트를 위한 설정 */
+    /* 모든 텍스트 선명도 향상 */
     * {
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
+        -webkit-font-smoothing: antialiased !important;
+        -moz-osx-font-smoothing: grayscale !important;
+        text-rendering: optimizeLegibility !important;
+    }
+    /* Streamlit 기본 제목 스타일 오버라이드 */
+    .stMarkdown h1, .stMarkdown h2, .stMarkdown h3 {
+        font-family: 'NanumGothic', sans-serif !important;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -100,8 +129,18 @@ data = {
 }
 df = pd.DataFrame(data)
 
-# 메인 타이틀
-st.markdown("# 🌟 라이프 트래커 대시보드")
+# 메인 타이틀 - HTML로 더 선명하게
+st.markdown("""
+<h1 style='
+    text-align: center; 
+    color: #2C3E50; 
+    font-weight: 900; 
+    font-size: 3.5rem; 
+    margin-bottom: 2rem;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+    font-family: NanumGothic, sans-serif;
+'>🌟 라이프 트래커 대시보드</h1>
+""", unsafe_allow_html=True)
 
 if not font_loaded:
     st.warning("⚠️ 나눔고딕 폰트를 로드할 수 없어 기본 폰트를 사용합니다. fonts/NanumGothic.ttf 파일을 확인해주세요.")
@@ -150,8 +189,18 @@ with col2:
     
     st.pyplot(fig1, use_container_width=True)
 
-# 시간 사용 패턴 차트
-st.markdown("## ⏰ 시간 사용 패턴")
+# 시간 사용 패턴 차트 - HTML로 더 선명하게
+st.markdown("""
+<h2 style='
+    color: #2C3E50; 
+    font-weight: 800; 
+    font-size: 2.2rem; 
+    margin-top: 2rem; 
+    margin-bottom: 1rem;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+    font-family: NanumGothic, sans-serif;
+'>⏰ 시간 사용 패턴</h2>
+""", unsafe_allow_html=True)
 
 col1, col2 = st.columns(2)
 
@@ -170,7 +219,7 @@ with col1:
     # 배경 그라데이션
     ax2.fill_between(dates, sleep_hours, alpha=0.3, color='#FF6B9D')
     
-    ax2.set_title('💤 수면시간 변화', fontsize=20, fontweight='bold', color='#2C3E50', pad=20)
+    ax2.set_title('수면시간 변화', fontsize=20, fontweight='bold', color='#2C3E50', pad=20)
     ax2.set_ylabel('시간', fontsize=16, color='#2C3E50', fontweight='bold')
     ax2.grid(True, alpha=0.3, color='#E8E8E8', linewidth=1)
     ax2.set_facecolor('white')
@@ -218,8 +267,18 @@ with col2:
     fig3.patch.set_facecolor('white')
     st.pyplot(fig3, use_container_width=True)
 
-# 종합 히트맵
-st.markdown("## 🔥 종합 활동 히트맵")
+# 종합 히트맵 - HTML로 더 선명하게
+st.markdown("""
+<h2 style='
+    color: #2C3E50; 
+    font-weight: 800; 
+    font-size: 2.2rem; 
+    margin-top: 2rem; 
+    margin-bottom: 1rem;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+    font-family: NanumGothic, sans-serif;
+'>🔥 종합 활동 히트맵</h2>
+""", unsafe_allow_html=True)
 
 # 히트맵용 데이터 준비
 heatmap_data = df[['수면시간', '공부시간', '운동시간']].T
@@ -248,8 +307,18 @@ ax4.set_facecolor('white')
 fig4.patch.set_facecolor('white')
 st.pyplot(fig4, use_container_width=True)
 
-# 통계 요약
-st.markdown("## 📈 주요 통계")
+# 통계 요약 - HTML로 더 선명하게
+st.markdown("""
+<h2 style='
+    color: #2C3E50; 
+    font-weight: 800; 
+    font-size: 2.2rem; 
+    margin-top: 2rem; 
+    margin-bottom: 1rem;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+    font-family: NanumGothic, sans-serif;
+'>📈 주요 통계</h2>
+""", unsafe_allow_html=True)
 
 col1, col2, col3, col4 = st.columns(4)
 
@@ -269,8 +338,18 @@ with col4:
     good_mood_ratio = (df['기분'] == '좋음').sum() / len(df) * 100
     st.metric("좋은 기분 비율", f"{good_mood_ratio:.0f}%", delta=f"{good_mood_ratio-50:.0f}%")
 
-# 추천사항
-st.markdown("## 💡 개선 제안")
+# 추천사항 - HTML로 더 선명하게
+st.markdown("""
+<h2 style='
+    color: #2C3E50; 
+    font-weight: 800; 
+    font-size: 2.2rem; 
+    margin-top: 2rem; 
+    margin-bottom: 1rem;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+    font-family: NanumGothic, sans-serif;
+'>💡 개선 제안</h2>
+""", unsafe_allow_html=True)
 
 col1, col2, col3 = st.columns(3)
 
