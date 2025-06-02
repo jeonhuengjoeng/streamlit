@@ -42,7 +42,6 @@ def setup_korean_font():
             plt.rcParams['figure.dpi'] = 100
             plt.rcParams['savefig.dpi'] = 100
             
-            st.success(f"✅ 나눔고딕 폰트 설정 완료: {font_path}")
             return True
             
         else:
@@ -296,7 +295,7 @@ sns.heatmap(heatmap_data, annot=True, fmt='d', cmap=cmap,
             linewidths=3, linecolor='white', square=True,
             annot_kws={'fontsize': 14, 'fontweight': 'bold'})
 
-ax4.set_title('📊 일별 활동 패턴', fontsize=22, fontweight='bold', color='#2C3E50', pad=20)
+ax4.set_title(' 일별 활동 패턴', fontsize=22, fontweight='bold', color='#2C3E50', pad=20)
 ax4.set_ylabel('활동 유형', fontsize=16, color='#2C3E50', fontweight='bold')
 ax4.set_xlabel('날짜', fontsize=16, color='#2C3E50', fontweight='bold')
 
@@ -549,14 +548,4 @@ with col3:
     </div>
     """, unsafe_allow_html=True)
 
-# 폰트 상태 확인 (디버깅용)
-st.markdown("---")
-with st.expander("🔧 폰트 설정 정보"):
-    current_font = plt.rcParams['font.family']
-    st.write(f"**현재 사용 폰트:** {current_font}")
-    st.write(f"**나눔고딕 로드 상태:** {'✅ 성공' if font_loaded else '❌ 실패'}")
-    
-    if os.path.exists('./fonts/NanumGothic.ttf'):
-        st.write("**폰트 파일:** ✅ fonts/NanumGothic.ttf 존재")
-    else:
-        st.write("**폰트 파일:** ❌ fonts/NanumGothic.ttf 없음")
+
