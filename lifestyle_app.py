@@ -5,14 +5,24 @@ import pandas as pd
 import numpy as np
 from matplotlib.patches import Circle
 import matplotlib.patches as mpatches
-import matplotlib.font_manager as fm
+import platform
 
 # 페이지 설정
-st.set_page_config(page_title="🌟 Life Tracker", layout="wide")
+st.set_page_config(page_title="🌟 라이프 트래커", layout="wide")
 
-# 한글 폰트 설정
-plt.rcParams['font.family'] = 'DejaVu Sans'
-plt.rcParams['axes.unicode_minus'] = False
+# 운영체제별 한글 폰트 설정
+def set_korean_font():
+    system = platform.system()
+    if system == 'Darwin':  # macOS
+        plt.rcParams['font.family'] = 'AppleGothic'
+    elif system == 'Windows':  # Windows
+        plt.rcParams['font.family'] = 'Malgun Gothic'
+    else:  # Linux 또는 기타
+        plt.rcParams['font.family'] = 'DejaVu Sans'
+    
+    plt.rcParams['axes.unicode_minus'] = False
+
+set_korean_font()
 
 # 커스텀 CSS로 깔끔한 흰색 배경
 st.markdown("""
@@ -41,16 +51,16 @@ st.markdown("""
 
 # 데이터 준비
 data = {
-    'date': ['2025-01-01', '2025-01-02', '2025-01-03'],
-    'sleep': [4, 6, 5],
-    'study': [5, 3, 6],
-    'exercise': [0, 0, 0],
-    'mood': ['Good', 'Normal', 'Bad']
+    '날짜': ['2025-01-01', '2025-01-02', '2025-01-03'],
+    '수면시간': [4, 6, 5],
+    '공부시간': [5, 3, 6],
+    '운동시간': [0, 0, 0],
+    '기분': ['좋음', '보통', '나쁨']
 }
 df = pd.DataFrame(data)
 
 # 메인 타이틀
-st.markdown("# 🌟 Life Tracker Dashboard")
+st.markdown("# 🌟 라이프 트래커 대시보드")
 
 # 3개 컬럼으로 레이아웃
 col1, col2, col3 = st.columns([1, 2, 1])
@@ -59,13 +69,13 @@ with col2:
     # 기분 분포 도넛 차트
     fig1, ax1 = plt.subplots(figsize=(10, 8), facecolor='white')
     
-    mood_counts = df['mood'].value_counts()
+    mood_counts = df['기분'].value_counts()
     # 파스텔 톤 컬러
     colors = ['#FFB3BA', '#BAFFC9', '#BAE1FF']  # 파스텔 핑크, 민트, 블루
     
     # 도넛 차트 생성
     wedges, texts, autotexts = ax1.pie(mood_counts.values, 
-                                      labels=['Good', 'Normal', 'Bad'],
+                                      labels=mood_counts.index,
                                       colors=colors,
                                       autopct='%1.0f%%',
                                       startangle=90,
@@ -77,7 +87,7 @@ with col2:
     ax1.add_artist(centre_circle)
     
     # 스타일링
-    ax1.set_title('Mood Distribution', fontsize=24, fontweight='bold', pad=30, color='#2C3E50')
+    ax1.set_title('😊 기분 분포', fontsize=24, fontweight='bold', pad=30, color='#2C3E50')
     
     # 텍스트 스타일링
     for autotext in autotexts:
@@ -96,7 +106,7 @@ with col2:
     st.pyplot(fig1)
 
 # 시간 사용 패턴 차트
-st.markdown("## ⏰ Time Usage Pattern")
+st.markdown("## ⏰ 시간 사용 패턴")
 
 col1, col2 = st.columns(2)
 
@@ -104,8 +114,8 @@ with col1:
     # 수면시간 트렌드
     fig2, ax2 = plt.subplots(figsize=(8, 6), facecolor='white')
     
-    dates = pd.to_datetime(df['date'])
-    sleep_hours = df['sleep']
+    dates = pd.to_datetime(df['날짜'])
+    sleep_hours = df['수면시간']
     
     # 파스텔 라인 차트
     ax2.plot(dates, sleep_hours, color='#FFB3E6', linewidth=4, marker='o', 
@@ -115,8 +125,8 @@ with col1:
     # 배경 그라데이션
     ax2.fill_between(dates, sleep_hours, alpha=0.3, color='#FFB3E6')
     
-    ax2.set_title('Sleep Hours Trend', fontsize=18, fontweight='bold', color='#2C3E50', pad=20)
-    ax2.set_ylabel('Hours', fontsize=14, color='#2C3E50')
+    ax2.set_title('💤 수면시간 변화', fontsize=18, fontweight='bold', color='#2C3E50', pad=20)
+    ax2.set_ylabel('시간', fontsize=14, color='#2C3E50')
     ax2.grid(True, alpha=0.3, color='#E8E8E8')
     ax2.set_facecolor('white')
     
@@ -134,7 +144,7 @@ with col2:
     # 공부시간 바 차트
     fig3, ax3 = plt.subplots(figsize=(8, 6), facecolor='white')
     
-    study_hours = df['study']
+    study_hours = df['공부시간']
     
     # 파스텔 바 차트
     bars = ax3.bar(range(len(dates)), study_hours, 
@@ -143,11 +153,11 @@ with col2:
     
     # 바 위에 값 표시
     for i, v in enumerate(study_hours):
-        ax3.text(i, v + 0.1, str(v) + 'h', ha='center', va='bottom', 
+        ax3.text(i, v + 0.1, str(v) + '시간', ha='center', va='bottom', 
                 fontweight='bold', fontsize=12, color='#2C3E50')
     
-    ax3.set_title('Study Hours Distribution', fontsize=18, fontweight='bold', color='#2C3E50', pad=20)
-    ax3.set_ylabel('Hours', fontsize=14, color='#2C3E50')
+    ax3.set_title('📚 공부시간 분포', fontsize=18, fontweight='bold', color='#2C3E50', pad=20)
+    ax3.set_ylabel('시간', fontsize=14, color='#2C3E50')
     ax3.set_xticks(range(len(dates)))
     ax3.set_xticklabels([d.strftime('%m/%d') for d in dates])
     ax3.grid(True, alpha=0.3, axis='y', color='#E8E8E8')
@@ -164,12 +174,11 @@ with col2:
     st.pyplot(fig3)
 
 # 종합 히트맵
-st.markdown("## 🔥 Comprehensive Activity Heatmap")
+st.markdown("## 🔥 종합 활동 히트맵")
 
 # 히트맵용 데이터 준비
-heatmap_data = df[['sleep', 'study', 'exercise']].T
-heatmap_data.columns = [f"Day {i+1}" for i in range(len(df))]
-heatmap_data.index = ['Sleep', 'Study', 'Exercise']
+heatmap_data = df[['수면시간', '공부시간', '운동시간']].T
+heatmap_data.columns = [f"{i+1}일차" for i in range(len(df))]
 
 fig4, ax4 = plt.subplots(figsize=(12, 6), facecolor='white')
 
@@ -179,12 +188,12 @@ cmap = sns.blend_palette(colors, as_cmap=True)
 
 # 히트맵 생성
 sns.heatmap(heatmap_data, annot=True, fmt='d', cmap=cmap, 
-            cbar_kws={'label': 'Hours'}, ax=ax4,
+            cbar_kws={'label': '시간 (hours)'}, ax=ax4,
             linewidths=2, linecolor='white', square=True)
 
-ax4.set_title('Daily Activity Pattern', fontsize=20, fontweight='bold', color='#2C3E50', pad=20)
-ax4.set_ylabel('Activity Type', fontsize=14, color='#2C3E50')
-ax4.set_xlabel('Date', fontsize=14, color='#2C3E50')
+ax4.set_title('📊 일별 활동 패턴', fontsize=20, fontweight='bold', color='#2C3E50', pad=20)
+ax4.set_ylabel('활동 유형', fontsize=14, color='#2C3E50')
+ax4.set_xlabel('날짜', fontsize=14, color='#2C3E50')
 
 # 축 레이블 스타일링
 ax4.tick_params(colors='#2C3E50')
@@ -194,36 +203,36 @@ fig4.patch.set_facecolor('white')
 st.pyplot(fig4)
 
 # 통계 요약
-st.markdown("## 📈 Key Statistics")
+st.markdown("## 📈 주요 통계")
 
 col1, col2, col3, col4 = st.columns(4)
 
 with col1:
-    avg_sleep = df['sleep'].mean()
-    st.metric("Average Sleep", f"{avg_sleep:.1f}h", delta=f"{avg_sleep-6:.1f}h")
+    avg_sleep = df['수면시간'].mean()
+    st.metric("평균 수면시간", f"{avg_sleep:.1f}시간", delta=f"{avg_sleep-6:.1f}시간")
 
 with col2:
-    avg_study = df['study'].mean()
-    st.metric("Average Study", f"{avg_study:.1f}h", delta=f"{avg_study-4:.1f}h")
+    avg_study = df['공부시간'].mean()
+    st.metric("평균 공부시간", f"{avg_study:.1f}시간", delta=f"{avg_study-4:.1f}시간")
 
 with col3:
-    total_exercise = df['exercise'].sum()
-    st.metric("Total Exercise", f"{total_exercise}h", delta="Need Exercise!")
+    total_exercise = df['운동시간'].sum()
+    st.metric("총 운동시간", f"{total_exercise}시간", delta="운동 필요!")
 
 with col4:
-    good_mood_ratio = (df['mood'] == 'Good').sum() / len(df) * 100
-    st.metric("Good Mood Ratio", f"{good_mood_ratio:.0f}%", delta=f"{good_mood_ratio-50:.0f}%")
+    good_mood_ratio = (df['기분'] == '좋음').sum() / len(df) * 100
+    st.metric("좋은 기분 비율", f"{good_mood_ratio:.0f}%", delta=f"{good_mood_ratio-50:.0f}%")
 
 # 추천사항
-st.markdown("## 💡 Improvement Suggestions")
+st.markdown("## 💡 개선 제안")
 
 col1, col2, col3 = st.columns(3)
 
 with col1:
-    st.info("🌙 Try to get 7-8 hours of sleep!")
+    st.info("🌙 수면시간을 7-8시간으로 늘려보세요!")
 
 with col2:
-    st.warning("🏃‍♂️ How about adding some exercise time?")
+    st.warning("🏃‍♂️ 운동시간을 추가해보시는 것은 어떨까요?")
 
 with col3:
-    st.success("📚 Great consistent study pattern!")
+    st.success("📚 꾸준한 공부 패턴이 좋습니다!")
